@@ -1,9 +1,7 @@
-import React, {Suspense} from 'react';
+import React  from 'react';
 import { Typography } from '@mui/material';
 import styled from '@emotion/styled';
-
-const Avatar = React.lazy(() => import('../Avatar/Avatar'));
-
+import PlayerCard from '../PlayerCard/PlayerCard';
 const Wrapper = styled.div`
     width: 100%;
     max-width: 1440px;
@@ -14,10 +12,15 @@ const Wrapper = styled.div`
 export default function LeaderBoard() {
   return (
     <Wrapper>
-      <Suspense fallback={<div>loading ...</div>}>
-        <Avatar/>
-      </Suspense>
+      
       <Typography variant="h2" component="div">LeaderBoard</Typography>
+      <PlayerCard 
+      avatar={{
+                imageUrl: "https://i.pravatar.cc/300&img=4",
+                playerName: "Vincent"
+              }}>
+                Name
+      </PlayerCard>
     </Wrapper>
   );
 }

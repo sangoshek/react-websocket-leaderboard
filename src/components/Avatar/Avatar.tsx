@@ -12,7 +12,8 @@ const AvatarWrapper = styled.div`
 export default function Avatar({imageUrl, playerName}: AvatarProps) {
   return (
     <AvatarWrapper>
-        Hi
+        <img src={imageUrl} alt={playerName} />
+        {playerName}
     </AvatarWrapper>
   );
 }
