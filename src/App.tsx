@@ -37,11 +37,11 @@ function App() {
   //   }));        
   // }
   return (
-    <div className="App">
+    <>
       <LeaderBoard/>
       {message}
       <button onClick={() => sendMessage(`hello`)}>send</button>
-    </div>
+    </>
   );
 }
 

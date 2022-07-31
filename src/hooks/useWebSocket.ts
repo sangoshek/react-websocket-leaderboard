@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 const initWebSocketUrl = `ws://localhost:9080`;
 
-const useWebSocket = (WebSocketUrl:string = initWebSocketUrl) => {
+const useWebSocket = (WebSocketUrl:string = initWebSocketUrl): any => {
   const [isConnected, setIsConnected] = useState(false);
   const [message, setMessage] = useState<string>('');
   const ws = new WebSocket(WebSocketUrl);
   ws.binaryType = "blob";
 
-  ws.onopen = () => {         
+  ws.onopen = useCallback(() => {         
     ws.send(JSON.stringify({
         message: "connected",
     })); 
     setIsConnected(true)        
-  };
+  },[isConnected]);
 
   const sendMessage = (msg: any):void => {
     ws.send(JSON.stringify({

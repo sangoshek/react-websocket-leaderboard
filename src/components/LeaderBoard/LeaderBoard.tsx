@@ -15,7 +15,7 @@ export default function LeaderBoard() {
       
       <Typography variant="h2" component="div">LeaderBoard</Typography>
       <PlayerCard 
-      avatar={{
+              avatar={{
                 imageUrl: "https://i.pravatar.cc/300&img=4",
                 playerName: "Vincent"
               }}>

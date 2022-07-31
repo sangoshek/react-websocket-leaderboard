@@ -5,13 +5,16 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon",
+    "serve": "ts-node index.ts"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "@types/ws": "^8.5.3",
+    "typescript": "^4.7.4",
     "ws": "^8.8.1"
   }
 }
