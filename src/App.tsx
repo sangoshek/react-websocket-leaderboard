@@ -2,17 +2,18 @@ import React from 'react';
 import './App.css';
 import LeaderBoard from './components/LeaderBoard/LeaderBoard';
 import useWebSocket from './hooks/useWebSocket';
-import { playerInfo } from './mock/players';
+import { store } from './store/store';
+import { Provider } from 'react-redux'
 
 function App() {
   const [message, sendMessage] = useWebSocket();
   
   return (
-    <React.Fragment>
-      <LeaderBoard data={playerInfo}/>
+    <Provider store={store}>
+      <LeaderBoard/>
       {message}
       <button onClick={() => sendMessage(`hello`)}>send</button>
-    </React.Fragment>
+    </Provider>
   );
 }
 

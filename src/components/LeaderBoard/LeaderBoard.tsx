@@ -1,50 +1,73 @@
 import React, { useState, useMemo }  from 'react';
-import { Typography, Pagination } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux'
+import { Typography, Pagination, Select, MenuItem, Stack } from '@mui/material';
 import styled from '@emotion/styled';
 import PlayerCard from '../PlayerCard/PlayerCard';
-import { LeaderBoardProps } from '../../typing/LeaderBoard';
+import { PlayerInfo } from '../../typing/Player';
+import _sortBy from 'lodash/sortBy';
+import * as Styled from './Styled';
 
-const Wrapper = styled.div`
-    width: 100%;
-    max-width: 1440px;
-    background-color: #ededed;
-    margin: 0 auto;
-`
-const PlayerList = styled.div`
-  display: block;
-`
-const StyledPagination = styled(Pagination)`
-  padding: 0 0 2rem 0;
-  & > ul{
-    display: flex;
-    justify-content: center;
-  }
-`
+export default function LeaderBoard() {
+  const data:any = useSelector((state) => state)
+  const dispatch = useDispatch()
 
-export default function LeaderBoard({data}: LeaderBoardProps) {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const dataSize = Math.round(data.length / pageSize)
 
-  const pagingatedData = data && data.slice(page, pageSize)
-  console.log('pagingatedData',pagingatedData)
+  const start = useMemo(() => page <= 1 ? 0 : (page - 1) * pageSize + 1, [page])
+  const end = useMemo(() => page <= 1 ? pageSize : page * pageSize, [page])
+  const dataSize = Math.round(data.length / pageSize) 
+
+  const rankedData: PlayerInfo[] = useMemo(() => _sortBy(data, ['score']).reverse().map((item,index) => {
+    return {  ...item,
+              rank: index + 1
+           }
+  }),[data])
+
+  const pagingatedData: PlayerInfo[] = useMemo(() => rankedData.slice(start, end),[page])
+  
+  const handleChangePageSize = (e: any) =>{
+    e.target.value && setPageSize(e.target.value)
+  }
+
   return (    
-    <Wrapper>      
+    <Styled.Wrapper>      
       <>
-      <Typography variant="h2" component="div">LeaderBoard</Typography>
-      <PlayerList>
-        {pagingatedData.length > 0 && pagingatedData.map((item, index) => (
+      <Styled.Title variant="h2" >Leader Board</Styled.Title>
+      <Styled.PlayerList>
+        {pagingatedData.length > 0 && pagingatedData.map((item: any, index: number) => (
           <PlayerCard 
               key={`player-card--${index}`}
+              rank={item.rank}
               avatar={{
                 imageUrl: item.profile_img,
                 playerName: item.name
               }}>
           </PlayerCard>
         ))}
-      </PlayerList>
-      <StyledPagination count={dataSize} onChange={(event, value)=> setPage(value)}/>
+      </Styled.PlayerList>
+      
+      <Stack 
+        flexDirection="row" 
+        justifyContent="space-between"
+        alignItems="center">
+        <Styled.StyledPagination count={dataSize} onChange={(event, value)=> setPage(value)}/>
+        <Select
+            labelId="page-size-label"
+            id="page-size-select"
+            value={pageSize}
+            label="Page size"
+            onChange={handleChangePageSize}
+          >
+            <MenuItem value="">
+              <em>Page size</em>
+            </MenuItem>
+            <MenuItem value="10">10</MenuItem>
+            <MenuItem value="25">25</MenuItem>
+            <MenuItem value="50">50</MenuItem>
+        </Select>
+      </Stack>
       </>      
-    </Wrapper>
+    </Styled.Wrapper>
   );
 }

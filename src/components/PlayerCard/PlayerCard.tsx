@@ -14,9 +14,10 @@ const PlayerWrapper = styled(Paper)`
     align-items: center;
 `
 
-export default function PlayerCard({avatar, children}: PlayerCardProps) {
+export default function PlayerCard({rank, avatar, children}: PlayerCardProps) {
   return (
     <PlayerWrapper elevation={3}>
+        {rank}
         <Suspense fallback={<div>loading ...</div>}>
             <Avatar {...avatar}/>
         </Suspense>
