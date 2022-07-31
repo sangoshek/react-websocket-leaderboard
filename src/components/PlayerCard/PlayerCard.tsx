@@ -6,7 +6,12 @@ import { PlayerCardProps } from '../../typing/PlayerCard';
 const Avatar = React.lazy(() => import('../Avatar/Avatar'));
 
 const PlayerWrapper = styled(Paper)`
-    margin: 2rem 0;
+    margin: 2rem auto;
+    max-width: 1280px;
+    height: 140px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 `
 
 export default function PlayerCard({avatar, children}: PlayerCardProps) {
