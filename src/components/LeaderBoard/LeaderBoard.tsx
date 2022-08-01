@@ -8,7 +8,7 @@ import _sortBy from 'lodash/sortBy';
 import * as Styled from './Styled';
 
 export default function LeaderBoard() {
-  const data:any = useSelector((state) => state)
+  const data:any = useSelector((state:any) => state)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState<number>(1);

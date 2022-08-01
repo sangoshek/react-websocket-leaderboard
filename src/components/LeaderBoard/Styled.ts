@@ -1,7 +1,6 @@
 
 import { Typography, Pagination } from '@mui/material';
 import styled from '@emotion/styled';
-import _sortBy from 'lodash/sortBy';
 
 const Wrapper = styled.div`
     width: 100%;

@@ -9,6 +9,11 @@ const AvatarWrapper = styled(Stack)`
     margin: 2rem;
 `
 
+const AvatarImg = styled(MUIAvator)`
+  width: 80px;
+  height: 80px;
+`
+
 export default function Avatar(
   {
     imageUrl, 
@@ -22,11 +27,10 @@ export default function Avatar(
       alignItems="center"
       textAlign="center"
       >
-        <MUIAvator 
+        <AvatarImg          
           alt={playerName} 
           src={imageUrl} 
           />
-        {playerName}
     </AvatarWrapper>
   );
 }

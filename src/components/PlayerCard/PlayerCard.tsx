@@ -11,18 +11,19 @@ export default function PlayerCard({
   score, 
   children
 }: PlayerCardProps) {
+  const isHighlighted = (rank && rank < 4) || false
   return (
     <Styled.PlayerWrapper elevation={3}>
-        <Styled.InfoBox>
+        <Styled.RankBox highlighted={isHighlighted}>
         {rank && rank}
-        </Styled.InfoBox>        
+        </Styled.RankBox>        
         <Suspense fallback={<div>loading ...</div>}>
             <Avatar {...avatar}/>
         </Suspense>
-        <Styled.InfoBox>
+        <Styled.NameBox highlighted={isHighlighted}>
         {name && name}
-        </Styled.InfoBox>
-        <Styled.ScoreBox>
+        </Styled.NameBox>
+        <Styled.ScoreBox highlighted={isHighlighted}>
         {score && score}
         </Styled.ScoreBox>
         {children}
