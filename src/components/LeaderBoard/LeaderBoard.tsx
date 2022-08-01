@@ -52,7 +52,11 @@ export default function LeaderBoard() {
       <Stack 
         flexDirection="row" 
         justifyContent="space-between"
-        alignItems="center">
+        alignItems="center"
+        maxWidth={1280}
+        marginX={`auto`}
+        marginY={4}
+        >
         <Styled.StyledPagination count={dataSize} onChange={(event, value)=> setPage(value)}/>
         <Select
             labelId="page-size-label"
