@@ -18,7 +18,7 @@ export default function LeaderBoard() {
   const end = useMemo(() => page <= 1 ? pageSize : page * pageSize, [page])
   const dataSize = Math.round(data.length / pageSize) 
 
-  const rankedData: PlayerInfo[] = useMemo(() => _sortBy(data, ['score']).reverse().map((item,index) => {
+  const rankedData: PlayerInfo[] = useMemo(() => _sortBy(data, ['score']).reverse().map((item: any, index:number) => {
     return {  ...item,
               rank: index + 1
            }
