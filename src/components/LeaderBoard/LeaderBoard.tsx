@@ -39,6 +39,8 @@ export default function LeaderBoard() {
           <PlayerCard 
               key={`player-card--${index}`}
               rank={item.rank}
+              score={item.score}
+              name={item.name}
               avatar={{
                 imageUrl: item.profile_img,
                 playerName: item.name

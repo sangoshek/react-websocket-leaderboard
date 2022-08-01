@@ -1,27 +1,31 @@
 import React, {Suspense} from 'react';
-import styled from '@emotion/styled';
-import { Paper } from '@mui/material';
 import { PlayerCardProps } from '../../typing/PlayerCard';
+import * as Styled from './Styled';
 
 const Avatar = React.lazy(() => import('../Avatar/Avatar'));
 
-const PlayerWrapper = styled(Paper)`
-    margin: 2rem auto;
-    max-width: 1280px;
-    height: 140px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-`
-
-export default function PlayerCard({rank, avatar, children}: PlayerCardProps) {
+export default function PlayerCard({
+  rank, 
+  avatar,
+  name,
+  score, 
+  children
+}: PlayerCardProps) {
   return (
-    <PlayerWrapper elevation={3}>
-        {rank}
+    <Styled.PlayerWrapper elevation={3}>
+        <Styled.InfoBox>
+        {rank && rank}
+        </Styled.InfoBox>        
         <Suspense fallback={<div>loading ...</div>}>
             <Avatar {...avatar}/>
         </Suspense>
+        <Styled.InfoBox>
+        {name && name}
+        </Styled.InfoBox>
+        <Styled.ScoreBox>
+        {score && score}
+        </Styled.ScoreBox>
         {children}
-    </PlayerWrapper>
+    </Styled.PlayerWrapper>
   );
 }
