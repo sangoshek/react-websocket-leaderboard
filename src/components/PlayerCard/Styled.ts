@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { Paper, Box } from '@mui/material';
-
+import { Paper, Box, TextField, Button } from '@mui/material';
 interface Props {
     highlighted: boolean;
 }
@@ -35,10 +34,32 @@ const ScoreBox = styled(Box)<Props>`
     font-weight: 500;
     ${props => props.highlighted ? `color: red;` : `color: #000`};
 `
+const InputBox = styled(Box)<Props>`
+    width: 50%;
+    text-align: right;
+`
+
+const InputScore = styled(TextField)`
+    width: 100px;
+    font-size: 3rem;
+`
+const ButtonEdit = styled(Button)`
+    width: 10%;
+    text-align: center;
+    color: #999;
+`
+const ButtonSave = styled(Button)`
+    width: 10%;
+    text-align: center;
+`
 
 export {
     PlayerWrapper,
     NameBox,
     ScoreBox,
-    RankBox
+    RankBox,
+    InputBox,
+    InputScore,
+    ButtonEdit,
+    ButtonSave
 }

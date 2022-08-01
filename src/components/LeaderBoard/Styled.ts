@@ -25,9 +25,11 @@ const Wrapper = styled.div`
 const Title = styled(Typography)`
     max-width: 1440px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 1rem 0 0 0;
     text-align: center;
-    font-weight: 500;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 10px #000;
 `
 
 const PlayerList = styled.div`
