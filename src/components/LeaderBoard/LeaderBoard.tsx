@@ -16,9 +16,10 @@ export default function LeaderBoard() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [pagingatedData, setPagingatedData] = useState<PlayerInfo[]>([]);
-  const start = useMemo(() => page <= 1 ? 0 : (page - 1) * pageSize + 1, [page])
-  const end = useMemo(() => page <= 1 ? pageSize : page * pageSize, [page])
-  const dataSize = useMemo(() => Math.round(data.length / pageSize), [data]) 
+  const dataSize = useMemo(() => Math.round(data.length / pageSize), [data, pageSize]) 
+  const start = useMemo(() => page <= 1 ? 0 : (page - 1) * pageSize + 1, [page, pageSize])
+  const end = useMemo(() => page <= 1 ? pageSize : page * pageSize, [page, pageSize])
+ 
 
   const getPagingatedData = () => {
     const rankedData: PlayerInfo[] = _sortBy(data, ['score']).reverse().map((item: any, index:number) => {
@@ -36,7 +37,7 @@ export default function LeaderBoard() {
   useEffect(()=>{
     console.log('data',data)
     getPagingatedData()
-  },[data])
+  },[data, page, pageSize])
 
   useEffect(()=>{
     console.log('message',message)

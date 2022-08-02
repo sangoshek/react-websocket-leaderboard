@@ -1,4 +1,4 @@
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { PlayerCardProps } from '../../typing/PlayerCard';
 import * as Styled from './Styled';
@@ -37,6 +37,9 @@ export default function PlayerCard({
     dispatch({ type: 'SET_PLAYER', payload: payload })
     handleToggleEdit()
   }
+  useEffect(()=>{
+    setScoreValue(score);
+  },[score])
   return (
     <Styled.PlayerWrapper elevation={3}>
         <Styled.RankBox highlighted={isHighlighted}>        
