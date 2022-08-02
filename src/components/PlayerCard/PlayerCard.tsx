@@ -1,16 +1,20 @@
 import React, {Suspense, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { PlayerCardProps } from '../../typing/PlayerCard';
 import * as Styled from './Styled';
+import _find from 'lodash/find'
 
 const Avatar = React.lazy(() => import('../Avatar/Avatar'));
 
 export default function PlayerCard({
+  id,
   rank, 
   avatar,
   name,
   score, 
   children
 }: PlayerCardProps) {
+  const dispatch = useDispatch()
   const [scoreValue, setScoreValue] = useState<number | undefined>(score);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const isHighlighted = (rank && rank < 4) || false
@@ -23,7 +27,14 @@ export default function PlayerCard({
     setScoreValue(e.target.value)
   }
   const handleSave = () => {
-    console.log('save')
+    console.log('id',id)
+    const payload = {
+      id: id,
+      name: name,
+      profile_img: avatar?.imageUrl,
+      score: 0
+    }
+    dispatch({ type: 'SET_PLAYER', payload: payload })
     handleToggleEdit()
   }
   return (

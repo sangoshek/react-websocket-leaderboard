@@ -1,34 +1,47 @@
-import React, { useState, useMemo }  from 'react';
+import React, { useState, useMemo, useEffect }  from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Typography, Pagination, Select, MenuItem, Stack } from '@mui/material';
-import styled from '@emotion/styled';
+import useWebSocket from '../../hooks/useWebSocket';
+import { Select, MenuItem, Stack } from '@mui/material';
 import PlayerCard from '../PlayerCard/PlayerCard';
 import { PlayerInfo } from '../../typing/Player';
 import _sortBy from 'lodash/sortBy';
 import * as Styled from './Styled';
 
 export default function LeaderBoard() {
+  const [message, sendMessage] = useWebSocket();
+
   const data:any = useSelector((state:any) => state)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-
+  const [pagingatedData, setPagingatedData] = useState<PlayerInfo[]>([]);
   const start = useMemo(() => page <= 1 ? 0 : (page - 1) * pageSize + 1, [page])
   const end = useMemo(() => page <= 1 ? pageSize : page * pageSize, [page])
-  const dataSize = Math.round(data.length / pageSize) 
+  const dataSize = useMemo(() => Math.round(data.length / pageSize), [data]) 
 
-  const rankedData: PlayerInfo[] = useMemo(() => _sortBy(data, ['score']).reverse().map((item: any, index:number) => {
-    return {  ...item,
-              rank: index + 1
-           }
-  }),[data])
-
-  const pagingatedData: PlayerInfo[] = useMemo(() => rankedData.slice(start, end),[page])
+  const getPagingatedData = () => {
+    const rankedData: PlayerInfo[] = _sortBy(data, ['score']).reverse().map((item: any, index:number) => {
+      return {  ...item,
+                rank: index + 1
+             }
+    })
+    setPagingatedData(rankedData.slice(start, end))
+  }
   
   const handleChangePageSize = (e: any) =>{
     e.target.value && setPageSize(e.target.value)
   }
+
+  useEffect(()=>{
+    console.log('data',data)
+    getPagingatedData()
+  },[data])
+
+  useEffect(()=>{
+    console.log('message',message)
+    getPagingatedData()
+  },[message])
 
   return (    
     <Styled.Wrapper>      
@@ -38,6 +51,7 @@ export default function LeaderBoard() {
         {pagingatedData.length > 0 && pagingatedData.map((item: any, index: number) => (
           <PlayerCard 
               key={`player-card--${index}`}
+              id={item.id}
               rank={item.rank}
               score={item.score}
               name={item.name}
