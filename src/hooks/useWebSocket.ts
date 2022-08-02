@@ -14,9 +14,7 @@ const useWebSocket = (): any => {
   const [message, setMessage] = useState<string>('');
 
   const sendMessage = (msg: any):void => {
-    ws.send(JSON.stringify({
-        message: msg,
-      }));  
+    ws.send(JSON.stringify({msg}));  
   }
 
   ws.onmessage = e => {
@@ -24,8 +22,8 @@ const useWebSocket = (): any => {
       const message = e.data;
       if (message instanceof Blob) {
           const reader = new FileReader();
-          reader.onload = (e) => {
-              console.log("Result: " +  e.target?.result);
+          reader.onload = (e) => {  
+              console.log("Result: " + e.target?.result);            
               setMessage(e.target?.result as string)
           };
           reader.readAsText(message);

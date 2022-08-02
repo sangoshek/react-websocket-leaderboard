@@ -39,10 +39,13 @@ export default function LeaderBoard() {
     getPagingatedData()
   },[data, page, pageSize])
 
-  useEffect(()=>{
-    console.log('message',message)
-    getPagingatedData()
-  },[message])
+  console.log('message',message)
+
+  // useEffect(()=>{
+  //   console.log('hi')
+  //   console.log('message',message)
+  //   getPagingatedData()
+  // },[message])
 
   return (    
     <Styled.Wrapper>      

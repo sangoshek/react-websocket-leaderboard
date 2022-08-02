@@ -1,5 +1,6 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+import useWebSocket from '../../hooks/useWebSocket';
 import { PlayerCardProps } from '../../typing/PlayerCard';
 import * as Styled from './Styled';
 import _find from 'lodash/find'
@@ -15,6 +16,7 @@ export default function PlayerCard({
   children
 }: PlayerCardProps) {
   const dispatch = useDispatch()
+  const [message, sendMessage] = useWebSocket();
   const [scoreValue, setScoreValue] = useState<number | undefined>(score);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const isHighlighted = (rank && rank < 4) || false
@@ -23,7 +25,6 @@ export default function PlayerCard({
     setIsEditing(!isEditing)
   }
   const handleScoreChange = (e:any) => {
-    console.log(e.target.value)
     setScoreValue(e.target.value)
   }
   const handleSave = () => {
@@ -34,6 +35,7 @@ export default function PlayerCard({
       score: scoreValue
     }
     dispatch({ type: 'SET_PLAYER', payload: payload })
+    sendMessage('send')
     handleToggleEdit()
   }
   useEffect(()=>{
