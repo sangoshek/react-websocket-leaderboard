@@ -35,7 +35,7 @@ export default function PlayerCard({
       score: scoreValue
     }
     dispatch({ type: 'SET_PLAYER', payload: payload })
-    sendMessage('send')
+    sendMessage({ type: 'SET_PLAYER', payload: payload })
     handleToggleEdit()
   }
   useEffect(()=>{
