@@ -27,12 +27,11 @@ export default function PlayerCard({
     setScoreValue(e.target.value)
   }
   const handleSave = () => {
-    console.log('id',id)
     const payload = {
       id: id,
       name: name,
       profile_img: avatar?.imageUrl,
-      score: 0
+      score: scoreValue
     }
     dispatch({ type: 'SET_PLAYER', payload: payload })
     handleToggleEdit()
