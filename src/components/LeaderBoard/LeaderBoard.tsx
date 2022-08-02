@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect }  from 'react';
+import React, { useState, useMemo, useEffect, useCallback }  from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import useWebSocket from '../../hooks/useWebSocket';
 import { Select, MenuItem, Stack } from '@mui/material';
@@ -20,7 +20,6 @@ export default function LeaderBoard() {
   const start = useMemo(() => page <= 1 ? 0 : (page - 1) * pageSize + 1, [page, pageSize])
   const end = useMemo(() => page <= 1 ? pageSize : page * pageSize, [page, pageSize])
  
-
   const getPagingatedData = () => {
     const rankedData: PlayerInfo[] = _sortBy(data, ['score']).reverse().map((item: any, index:number) => {
       return {  ...item,
@@ -34,13 +33,13 @@ export default function LeaderBoard() {
     e.target.value && setPageSize(e.target.value)
   }
 
+  console.log('msg',message.current)
+
   useEffect(()=>{
     getPagingatedData()
   },[data, page, pageSize])
 
-  useEffect(()=>{
-      console.log('message',message) 
-  },[message])    
+  
 
   return (    
     <Styled.Wrapper>      

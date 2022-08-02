@@ -2,42 +2,28 @@ import { useState, useRef, useEffect} from "react";
 
 const initWebSocketUrl = `ws://localhost:9080`;
 const ws = new WebSocket(initWebSocketUrl);
-ws.binaryType = "blob";
-
-ws.onopen = () => {         
-  ws.send(JSON.stringify({
-      message: "connected",
-  }));    
-};
 
 const useWebSocket = (): any => {
-  const [message, setMessage] = useState<string>('');
-  const [counter, setCounter] = useState<number>(0);
+  const message = useRef<string|null>('');
 
   const sendMessage = (msg: any):void => {
-    ws.send(JSON.stringify({msg}));  
-    setCounter((counter) => counter++)
+    ws.send(JSON.stringify({msg}));
   }
-  
-  useEffect(()=> {
+
+  useEffect(()=>{
+    ws.onopen = () => {         
+      ws.send(JSON.stringify({
+          message: "connected",
+      }));    
+    };
     ws.onmessage = e => {
-        if (e.data) {
-        const message = e.data;
-        if (message instanceof Blob) {
-            const reader = new FileReader();
-            reader.onload = (e) => {  
-                console.log("Result: " + e.target?.result);   
-                const msg: string = JSON.parse(e.target?.result as any)         
-                setMessage(msg)
-            };
-            reader.readAsText(message);
-        } else {
-            console.log("Result: " + message);
-            setMessage(message)
-        }
-      }
-    }   
-  },[counter])     
+      e.data && e.data.text().then((text: any) => {
+        message.current = text
+        console.log('text',text)
+      })
+    }  
+
+  },[ws])
 
   return [message, sendMessage];
 };
