@@ -17,7 +17,6 @@ const updateObjectInArray = (array: any, payload: any) => {
 export default function players(state = INITIAL_STATE, action: any){
 	switch(action.type) {
 		case "SET_PLAYER":
-			console.log('payload',action.payload)
 			return updateObjectInArray(state, action.payload);
 		default:
 			return state;

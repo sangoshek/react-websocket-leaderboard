@@ -8,7 +8,7 @@ import _sortBy from 'lodash/sortBy';
 import * as Styled from './Styled';
 
 export default function LeaderBoard() {
-  const [message, sendMessage] = useWebSocket();
+  const [message, sendMessage, ws] = useWebSocket();
 
   const data:any = useSelector((state:any) => state)
   const dispatch = useDispatch()
@@ -33,13 +33,18 @@ export default function LeaderBoard() {
     e.target.value && setPageSize(e.target.value)
   }
 
-  console.log('msg',message.current)
+ 
+  useEffect(()=>{
+    ws.onopen = () => {  
+      console.log('connected');
+    };
+    console.log('msg',message)
+  },[ws]) 
+  
 
   useEffect(()=>{
     getPagingatedData()
-  },[data, page, pageSize])
-
-  
+  },[data, page, pageSize]) 
 
   return (    
     <Styled.Wrapper>      

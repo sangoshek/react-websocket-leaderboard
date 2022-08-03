@@ -1,31 +1,35 @@
 import { useState, useRef, useEffect} from "react";
 
 const initWebSocketUrl = `ws://localhost:9080`;
-const ws = new WebSocket(initWebSocketUrl);
 
 const useWebSocket = (): any => {
   const message = useRef<string|null>('');
+  const [counter, setCounter] = useState<number>(0);
+  const ws = new WebSocket(initWebSocketUrl);
 
   const sendMessage = (msg: any):void => {
-    ws.send(JSON.stringify({msg}));
-  }
-
-  useEffect(()=>{
-    ws.onopen = () => {         
-      ws.send(JSON.stringify({
-          message: "connected",
-      }));    
+    ws.onopen = () => {  
+      console.log('connected');
     };
-    ws.onmessage = e => {
-      e.data && e.data.text().then((text: any) => {
-        message.current = text
+    ws.send(JSON.stringify({msg}));
+    setCounter(counter=>counter++)
+  }
+  
+  useEffect(()=>{
+    ws.onopen = () => {  
+      console.log('connected');
+    };
+
+    ws.onmessage = e => {   
+      message.current = e.data   
+      e.data && e.data.text().then((text: any) => {  
         console.log('text',text)
+        
       })
     }  
-
   },[ws])
 
-  return [message, sendMessage];
+  return [message, sendMessage, ws];
 };
 
 export default useWebSocket;
