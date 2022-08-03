@@ -11,6 +11,10 @@ Or you can start with yarn or npm, you can run:
 
 ### `yarn install` or `npm install`
 
+To start web socket server first,
+### `cd /server && yarn dev` or `cd /server && npm run start`
+
+To start the react app after:
 ### `yarn start` or `npm run start`
 
 Runs the app in the development mode.\
